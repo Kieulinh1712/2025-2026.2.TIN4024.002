@@ -1,4 +1,7 @@
 DANH SÁCH NHÓM 2
 1. Võ Việt Dũng
 2. Nguyễn Đăng Khôi
-3. Nguyễn Hữu Đạt
+<<<<<<< HEAD
+=======
+3. Nguyễn Gia Huy
+>>>>>>> 1e45bd7c95299d9dae89e166044608f84ba407e0
