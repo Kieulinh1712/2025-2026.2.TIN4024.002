@@ -2,7 +2,7 @@
 
 #define PIN_LED_RED 23
 
-//Non-blocking
+// Non-blocking timer function
 bool IsReady(unsigned long &ulTimer, uint32_t millisecond) {
   if (millis() - ulTimer < millisecond) return false;
   ulTimer = millis();
@@ -10,19 +10,23 @@ bool IsReady(unsigned long &ulTimer, uint32_t millisecond) {
 }
 
 void setup() {
-  // put your setup code here, to run once:
-  printf("WELCOME IOT\n");
+  // Initialize serial communication
+  Serial.begin(115200);
+  Serial.println("LED Blink Project - Le Trong Kha");
+  Serial.println("Student ID: 22t1020634");
+  
+  // Set LED pin as output
   pinMode(PIN_LED_RED, OUTPUT);
 }
 
-//Non-Blocking
 void loop() {
   static unsigned long ulTimer = 0;
   static bool ledStatus = false;
 
-  if (IsReady(ulTimer, 500)){
+  // Non-blocking LED blink every 500ms (0.5 second)
+  if (IsReady(ulTimer, 500)) {
     ledStatus = !ledStatus;
-    printf("LED IS %s\n", ledStatus ? "ON" : "OFF");
+    Serial.printf("LED is %s\n", ledStatus ? "ON" : "OFF");
     digitalWrite(PIN_LED_RED, ledStatus ? HIGH : LOW);
   }
 }
