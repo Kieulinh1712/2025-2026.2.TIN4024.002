@@ -74,17 +74,31 @@ void loop() {
   if (!systemOn) return;
 
   //2.Đọc cảm biến ánh sáng
-  static unsigned long ldrTimer = 0;
-  if (IsReady(ldrTimer, 2000)) {
-    //printf("Current Lux: %.2f\n", getLux());
-  }
+  float lux = getLux();
+  bool isNightMode = (lux < 2000);
+  
 
   //3.Điều khiển đèn
   digitalWrite(PIN_LED_BLUE, HIGH); 
-  digitalWrite(PIN_LED_RED,    (state == 0) ? HIGH : LOW);
-  digitalWrite(PIN_LED_GREEN,  (state == 1) ? HIGH : LOW);
-  digitalWrite(PIN_LED_YELLOW, (state == 2) ? HIGH : LOW);
 
+  if (isNightMode) {
+    // CHẾ ĐỘ BAN ĐÊM: Đèn Vàng sáng liên tục, tắt các đèn khác
+    digitalWrite(PIN_LED_RED, LOW);
+    digitalWrite(PIN_LED_GREEN, LOW);
+    digitalWrite(PIN_LED_YELLOW, HIGH);
+    
+    if (IsReady(countTimer, 1000)) {
+        display.clear(); 
+        
+    }
+    ulTimer = millis(); // Reset timer để giữ nguyên trạng thái khi trời sáng lại
+  } 
+  else {
+    // CHẾ ĐỘ BÌNH THƯỜNG: Sáng đứng theo trạng thái
+    digitalWrite(PIN_LED_RED,    (state == 0) ? HIGH : LOW);
+    digitalWrite(PIN_LED_GREEN,  (state == 1) ? HIGH : LOW);
+    digitalWrite(PIN_LED_YELLOW, (state == 2) ? HIGH : LOW);
+  }
   //4.
   if (IsReady(countTimer, 1000)) {
     display.showNumberDec(timeLeft);
