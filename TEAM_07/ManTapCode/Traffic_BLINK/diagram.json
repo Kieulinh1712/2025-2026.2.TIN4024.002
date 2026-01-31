@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "author": "09. Võ Tiến Đạt",
+  "author": "ManLee123",
   "editor": "wokwi",
   "parts": [
     { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 48, "left": 62.44, "attrs": {} },
