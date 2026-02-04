@@ -4,7 +4,7 @@
 #include <Adafruit_SSD1306.h>
 #include <DHT.h>
 
-// Cấu hình OLED theo diagram.json (SDA: 13, SCL: 12)
+// Cấu hình OLED 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
 #define OLED_RESET -1
@@ -15,12 +15,12 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
-// Cấu hình LED theo diagram.json
+// Cấu hình LED 
 #define LED_GREEN 15
 #define LED_YELLOW 2
 #define LED_RED 4
 
-// Biến quản lý thời gian (Non-blocking)
+// Non-blocking
 unsigned long prevDHTTime = 0;
 unsigned long prevBlinkTime = 0;
 bool ledVisible = false;
@@ -64,7 +64,7 @@ void loop() {
     if (isnan(t) || isnan(h)) {
       statusMsg = "ERR SENSOR";
     } else {
-      // Logic phân loại ngưỡng theo ảnh image_fedf9c.png
+      // Logic phân loại ngưỡng 
       if (t < 13) { statusMsg = "TOO COLD"; currentLed = LED_GREEN; }
       else if (t < 20) { statusMsg = "COLD"; currentLed = LED_GREEN; }
       else if (t < 25) { statusMsg = "COOL"; currentLed = LED_YELLOW; }
