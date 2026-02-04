@@ -2,7 +2,7 @@
 THÔNG TIN NHÓM 7
 1. 
 2. Võ Tiến Đạt
-3. 
+3. Hồ Thị Kiều Oanh 
 4. Nguyễn Phan Thủy Tiên
 */
 
@@ -16,3 +16,4 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 }
+
