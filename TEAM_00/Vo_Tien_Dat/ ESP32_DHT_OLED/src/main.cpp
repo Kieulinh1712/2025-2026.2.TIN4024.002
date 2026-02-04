@@ -10,14 +10,14 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // Cấu hình cảm biến DHT22
-#define DHTPIN 15          // Chân Data của DHT22 nối vào GPIO 15
+#define DHTPIN 16          // Chân Data của DHT22 nối vào GPIO 16
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
 // Cấu hình chân LED (Dựa trên sơ đồ của bạn)
-const int LED_CYAN   = 2;  // Màu xanh lam (Cyan) cho trạng thái Lạnh
-const int LED_YELLOW = 4;  // Màu vàng cho trạng thái Mát/Ấm
-const int LED_RED    = 5;  // Màu đỏ cho trạng thái Nóng
+const int LED_CYAN   = 15;  // Màu xanh lam (Cyan) cho trạng thái Lạnh
+const int LED_YELLOW = 2;  // Màu vàng cho trạng thái Mát/Ấm
+const int LED_RED    = 4;  // Màu đỏ cho trạng thái Nóng
 
 void setup() {
   Serial.begin(115200);
