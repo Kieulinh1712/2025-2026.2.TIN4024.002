@@ -29,6 +29,7 @@ void setup() {
 
   // Khởi tạo DHT22
   dht.begin();
+  delay(2000); // Đợi cảm biến ổn định
 
   // Khởi tạo OLED (Địa chỉ mặc định thường là 0x3C)
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
@@ -46,13 +47,25 @@ void setup() {
 }
 
 void loop() {
-  // Đọc dữ liệu từ DHT22
+  // Đọc dữ liệu từ DHT22 với retry
   float temp = dht.readTemperature();
-  float hum  = dht.readHumidity();
+  float hum = dht.readHumidity();
 
-  // Kiểm tra nếu cảm biến bị lỗi
+  // Nếu đọc thất bại, thử lại sau 1 giây
+  if (isnan(temp) || isnan(hum)) {
+    delay(1000);
+    temp = dht.readTemperature();
+    hum = dht.readHumidity();
+  }
+
+  // Kiểm tra lại nếu vẫn lỗi
   if (isnan(temp) || isnan(hum)) {
     Serial.println("Loi doc cam bien!");
+    display.clearDisplay();
+    display.setCursor(0,0);
+    display.println("Loi doc cam bien!");
+    display.display();
+    delay(2000);
     return;
   }
 
@@ -114,4 +127,6 @@ void loop() {
     digitalWrite(activeLED, LOW);
     delay(500); // Tắt 0.5 giây
   }
+
+  delay(2000); // Đợi 2 giây trước khi đọc lại cảm biến
 }
