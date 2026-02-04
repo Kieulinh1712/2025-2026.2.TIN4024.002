@@ -29,7 +29,7 @@ void setup() {
   Wire.begin(); // Khởi tạo I2C
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println("OLED init failed!");
-    for(;;);
+    // for(;;); // Comment để tiếp tục chạy trong Wokwi
   }
   Serial.println("OLED initialized");
   display.clearDisplay();
@@ -37,11 +37,20 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("Loop start");
   float temp = dht.readTemperature();
   float hum  = dht.readHumidity();
 
   if (isnan(temp) || isnan(hum)) {
     Serial.println("Sensor read failed!");
+    // Hiển thị lỗi trên OLED
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(2);
+    display.setCursor(0, 20);
+    display.println("Sensor Error");
+    display.display();
+    delay(2000);
     return;
   }
 
@@ -71,24 +80,26 @@ void loop() {
   display.setCursor(0, 0);
   display.print("Temperature: ");
   display.println(statusText);
+  display.display();
 
   // Dòng 2: Giá trị nhiệt độ (Size 2)
   display.setTextSize(2);
   display.setCursor(0, 12);
   display.print(temp, 2); 
   display.println(" °C");
+  display.display();
 
   // Dòng 3: Humidity (Size 1)
   display.setTextSize(1);
   display.setCursor(0, 35);
   display.println("Humidity:");
+  display.display();
 
   // Dòng 4: Giá trị độ ẩm (Size 2)
   display.setTextSize(2);
   display.setCursor(0, 47);
   display.print(hum, 2);
   display.println(" %");
-
   display.display();
 
   // --- HIỆU ỨNG NHẤP NHÁY LED ---
