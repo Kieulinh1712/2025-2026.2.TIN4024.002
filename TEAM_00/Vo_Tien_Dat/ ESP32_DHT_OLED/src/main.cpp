@@ -11,7 +11,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // Cấu hình cảm biến DHT22
 #define DHTPIN 16          // Chân Data của DHT22 nối vào GPIO 16
-#define DHTTYPE DHT22
+#define DHTTYPE DHT11     // Thay đổi thành DHT11 nếu cảm biến là DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
 // Cấu hình chân LED (Dựa trên sơ đồ của bạn)
@@ -27,7 +27,7 @@ void setup() {
   pinMode(LED_YELLOW, OUTPUT);
   pinMode(LED_RED, OUTPUT);
 
-  // Khởi tạo DHT22
+  // Khởi tạo DHT11
   dht.begin();
   delay(2000); // Đợi cảm biến ổn định
 
@@ -69,27 +69,34 @@ void loop() {
     return;
   }
 
+  // In ra Serial để debug
+  Serial.print("Nhiet do: ");
+  Serial.print(temp);
+  Serial.print(" C, Do am: ");
+  Serial.print(hum);
+  Serial.println(" %");
+
   String statusText = "";
   int activeLED = -1;
 
   // Logic phân loại ngưỡng nhiệt độ theo bảng yêu cầu
   if (temp < 13.0) {
-    statusText = "TOO COLD";
+    statusText = "TOO COLD ❄️";
     activeLED = LED_CYAN;
   } else if (temp >= 13.0 && temp < 20.0) {
-    statusText = "COLD";
+    statusText = "COLD ☔";
     activeLED = LED_CYAN;
   } else if (temp >= 20.0 && temp < 25.0) {
-    statusText = "COOL";
+    statusText = "COOL ☁️";
     activeLED = LED_YELLOW;
   } else if (temp >= 25.0 && temp < 30.0) {
-    statusText = "WARM";
+    statusText = "WARM ☀️";
     activeLED = LED_YELLOW;
   } else if (temp >= 30.0 && temp < 35.0) {
-    statusText = "HOT";
+    statusText = "HOT 🌞";
     activeLED = LED_RED;
   } else { // temp >= 35.0
-    statusText = "TOO HOT";
+    statusText = "TOO HOT 🔥";
     activeLED = LED_RED;
   }
 
