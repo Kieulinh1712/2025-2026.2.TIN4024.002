@@ -1,7 +1,7 @@
 /*
 THÔNG TIN NHÓM 7
 1. 
-2. 
+2. Võ Tiến Đạt
 3. 
 4. Nguyễn Phan Thủy Tiên
 */
